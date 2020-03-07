@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace akabutbetter.Models
 {
-    public class ShortlinkContext : DbContext
+    public class AkaContext : DbContext
     {
-        public ShortlinkContext(DbContextOptions<ShortlinkContext> options)
+        public AkaContext(DbContextOptions<AkaContext> options)
             : base(options)
         {
         }

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "akabutbetter", "akabutbetter.csproj", "{764E597A-1D7A-4E4F-85A5-45F53601C06C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unittestaka", "unittestaka\unittestaka.csproj", "{AA323572-0C82-4C3E-B44C-E1D7CF749603}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{764E597A-1D7A-4E4F-85A5-45F53601C06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{764E597A-1D7A-4E4F-85A5-45F53601C06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{764E597A-1D7A-4E4F-85A5-45F53601C06C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA323572-0C82-4C3E-B44C-E1D7CF749603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA323572-0C82-4C3E-B44C-E1D7CF749603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA323572-0C82-4C3E-B44C-E1D7CF749603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA323572-0C82-4C3E-B44C-E1D7CF749603}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

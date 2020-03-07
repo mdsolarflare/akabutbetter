@@ -27,7 +27,7 @@ namespace akabutbetter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ShortlinkContext>(opt => opt.UseInMemoryDatabase("ShortlinkList"));
+            services.AddDbContext<AkaContext>(opt => opt.UseInMemoryDatabase("ShortlinkDB"));
             services.AddControllers();
         }
 
