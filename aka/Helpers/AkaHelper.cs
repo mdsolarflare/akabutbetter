@@ -19,7 +19,7 @@ namespace akabutbetter.Helpers
         public static Shortlink GetShortlinkFromDb(AkaContext _context, string shortlink)
         {
             var rows = _context.Shortlinks
-                .Where(s => s.Shortname.Equals(shortlink));
+                .Where(s => s.PrettyName.Equals(shortlink));
 
             if (rows.Count() == 1)
             {
