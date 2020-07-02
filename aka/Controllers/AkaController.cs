@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using akabutbetter.Helpers;
 using akabutbetter.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace akabutbetter.Controllers
@@ -21,24 +20,44 @@ namespace akabutbetter.Controllers
             _logger = logger;
             _context = context;
         }
-        
+
         // POST: api/TodoItems
-        /*[HttpPost]
-        public async Task<ActionResult<Shortlink>> PostShortlink(Shortlink shortlink)
+        [Route("api/add")]
+        [HttpPost]
+        public async Task<ActionResult<Shortlink>> PostShortlink([FromForm]ShortlinkRequest? request)
         {
-            _context.Shortlinks.Add(shortlink);
-            await _context.SaveChangesAsync();
+            if (request == null)
+            {
+                _logger.LogError($"Received a failed shortlink add/post @ {DateTime.Now}");
+                return BadRequest("Shortlink is null.");
+            }
             
-            return CreatedAtAction(nameof(GetShortlink), new { id = shortlink.LinkId }, shortlink);
-        }*/
+            _logger.LogInformation($"Received shortlink creation request: {request}.");
+            
+            // if doesn't exist
+            Shortlink fromDb = AkaHelper.GetShortlinkFromDb(_context, request.PrettyName);
+            if (fromDb  == null)
+            {
+                await _context.Shortlinks.AddAsync(new Shortlink(request, _context));
+                await _context.SaveChangesAsync();
+                
+                return CreatedAtAction(nameof(Get), new { pretty = request.PrettyName }, request);
+            }
+
+            return Unauthorized(fromDb);
+        }
 
         // GET:
-        [HttpGet("{shortname}")]
-        public void Get(string shortname)
+        [HttpGet("{pretty}")]
+        public void Get(string pretty)
         {
-            Console.WriteLine($"shortname: {shortname} requested.");
-            string built = "http://www." + shortname + ".com";
-            Response.Redirect(built);
+            _logger.LogInformation($"Shortlink name: {pretty} requested at {DateTime.Now}.");
+            
+            if (!string.IsNullOrWhiteSpace(pretty))
+            {
+                Shortlink sl = _context.Shortlinks.Single(sl => pretty.Equals(sl.PrettyName));
+                Response.Redirect(sl.Destination.ToString());
+            }
         }
     }
 }

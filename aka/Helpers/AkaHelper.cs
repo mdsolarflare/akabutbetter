@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using akabutbetter.Models;
 
@@ -6,29 +5,27 @@ namespace akabutbetter.Helpers
 {
     public class AkaHelper
     {
-        public static List<Shortlink> GetAllShortlinksFromDb(AkaContext _context)
-        {
-            return _context.Shortlinks.ToList();
-        }
-
         public static Shortlink GetShortlinkFromDb(AkaContext _context, int id)
         {
             return _context.Shortlinks.Find(id);
         }
 
-        public static Shortlink GetShortlinkFromDb(AkaContext _context, string shortlink)
+        /// <summary>
+        /// Get shortlink if only 1 reference to the requested short/pretty name exists.
+        /// </summary>
+        /// <param name="context">Database context</param>
+        /// <param name="prettyname">The short name or pretty name used for the shortlink.</param>
+        /// <returns>Returns null if no results or too many results found.</returns>
+        public static Shortlink GetShortlinkFromDb(AkaContext context, string prettyname)
         {
-            var rows = _context.Shortlinks
-                .Where(s => s.PrettyName.Equals(shortlink));
+            var rows = context.Shortlinks.Where(s => s.PrettyName.Equals(prettyname));
 
-            if (rows.Count() == 1)
-            {
-                return rows.FirstOrDefault();
-            }
-            else
-            {
-                return null;
-            }
+            return (rows.Count() == 1) ?  rows.FirstOrDefault() : null;
+        }
+
+        public static int GetNextAvailableIDFrom(AkaContext context)
+        {
+            return 1;
         }
     }
 }

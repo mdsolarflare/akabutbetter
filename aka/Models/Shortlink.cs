@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore;
+using akabutbetter.Helpers;
 
 namespace akabutbetter.Models
 {
@@ -28,6 +25,15 @@ namespace akabutbetter.Models
             PrettyName = prettyName;
             Destination = destination;
             Owners = owners;
+            LastUpdated = DateTime.Now;
+        }
+
+        public Shortlink(ShortlinkRequest request, AkaContext context)
+        {
+            LinkId = AkaHelper.GetNextAvailableIDFrom(context);
+            PrettyName = request.PrettyName;
+            Destination = new Uri(request.DestinationUri);
+            Owners = OwnerHelper.CreateListFrom(request.Owners);
             LastUpdated = DateTime.Now;
         }
 
@@ -85,7 +91,7 @@ namespace akabutbetter.Models
         {
             return "{ "
                    + $"LinkId: {LinkId}, PrettyName: {PrettyName}, Destination: {Destination}"
-                   + $", Owners: {string.Join(",", Owners)}, Last Updated: {LastUpdated}"
+                   + $", Owners: [{string.Join(",", Owners)}], Last Updated: {LastUpdated}"
                    + " }";
         }
     }
