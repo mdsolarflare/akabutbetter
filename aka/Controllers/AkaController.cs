@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using akabutbetter.Helpers;
 using akabutbetter.Models;
@@ -52,11 +51,15 @@ namespace akabutbetter.Controllers
         public void Get(string pretty)
         {
             _logger.LogInformation($"Shortlink name: {pretty} requested at {DateTime.Now}.");
-            
+
             if (!string.IsNullOrWhiteSpace(pretty))
             {
-                Shortlink sl = _context.Shortlinks.Single(sl => pretty.Equals(sl.PrettyName));
+                Shortlink sl = AkaHelper.GetShortlinkFromDb(_context, pretty);
                 Response.Redirect(sl.Destination.ToString());
+            }
+            else
+            {
+                AkaHelper.RedirectToLinkManagement();
             }
         }
     }

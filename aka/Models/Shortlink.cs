@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using akabutbetter.Helpers;
 
 namespace akabutbetter.Models
@@ -40,6 +41,7 @@ namespace akabutbetter.Models
         /// <summary>
         /// The ID for link, for reference in DB and elsewhere.
         /// </summary>
+        [Key]
         public int LinkId { get; private set; }
 
         /// <summary>
